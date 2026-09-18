@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>REVISI RUSH — Happy Birthday Tama! 🎉</title>
+<meta name="description" content="Kado ulang tahun buat Tama — sebuah game kecil, dibuat dengan sayang." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="bg-blobs" aria-hidden="true">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-c"></div>
+  <div class="grain"></div>
+</div>
+
+<div id="app">
+
+  <!-- ===================== START SCREEN ===================== -->
+  <section id="screen-start" class="screen active">
+    <div class="card intro-card">
+      <p class="eyebrow">🎁 sebuah kado kecil untuk</p>
+      <h1 class="title-hero">TAMA<span class="dot">.</span></h1>
+      <p class="subtitle">buat kamu yang paling jago bikin orang lain "acc" cuma dari satu draft 🎨</p>
+
+      <div class="game-name-tag">
+        <span class="tag-pill">🕹️ REVISI RUSH</span>
+      </div>
+
+      <p class="intro-copy">
+        misi kamu: <strong>tangkep ide &amp; healing</strong>,
+        <strong>hindarin revisi &amp; deadline</strong>.
+        gampang kok, se-gampang kamu bikin logo dalam semalam. 😌
+      </p>
+
+      <button id="btn-start" class="btn-primary">
+        <span>MULAI MAIN</span>
+        <span class="btn-arrow">→</span>
+      </button>
+
+      <button id="btn-howto" class="btn-ghost">cara main dulu deh</button>
+
+      <p class="best-score-line" id="best-score-line" hidden>
+        🏆 skor terbaik kamu: <strong id="best-score-value">0</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== HOW TO PLAY ===================== -->
+  <section id="screen-howto" class="screen">
+    <div class="card">
+      <p class="eyebrow">panduan client onboarding</p>
+      <h2 class="title-md">Cara Main</h2>
+
+      <ul class="howto-list">
+        <li>
+          <span class="howto-emoji">👆</span>
+          <span><strong>Geser / drag</strong> layar (atau tombol <kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd> di desktop) buat gerakin karakter kamu.</span>
+        </li>
+        <li>
+          <span class="howto-emoji">🎨☕💡</span>
+          <span><strong>Tangkep</strong> ide, kopi, palet warna, dan love — itu semua bikin skor naik &amp; combo makin gila.</span>
+        </li>
+        <li>
+          <span class="howto-emoji">📢⏰</span>
+          <span><strong>Hindarin</strong> "REVISI LAGI!", deadline mepet, sama request receh client — itu bikin nyawa kamu abis.</span>
+        </li>
+        <li>
+          <span class="howto-emoji">❤️</span>
+          <span>Nyawa cuma 3. Abis itu... client review kelar, dan ada sesuatu buat kamu di ending. 👀</span>
+        </li>
+      </ul>
+
+      <button id="btn-howto-start" class="btn-primary">
+        <span>OKE, GASKEUN</span>
+        <span class="btn-arrow">→</span>
+      </button>
+      <button id="btn-howto-back" class="btn-ghost">balik</button>
+    </div>
+  </section>
+
+  <!-- ===================== GAME SCREEN ===================== -->
+  <section id="screen-game" class="screen">
+    <div class="hud">
+      <div class="hud-left">
+        <span class="hud-label">SKOR</span>
+        <span class="hud-value" id="hud-score">0</span>
+      </div>
+      <div class="hud-center" id="hud-combo" hidden>
+        <span id="hud-combo-value">x1</span> <span class="combo-word">combo!</span>
+      </div>
+      <div class="hud-right">
+        <button id="btn-mute" class="btn-mute-inline" aria-label="mute">🔊</button>
+        <div class="lives-pill" id="hud-lives">
+          <span class="life">❤️</span><span class="life">❤️</span><span class="life">❤️</span>
+        </div>
+      </div>
+    </div>
+
+    <canvas id="game-canvas"></canvas>
+
+    <div id="floaters" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===================== COUNTDOWN OVERLAY ===================== -->
+  <div id="countdown-overlay" hidden>
+    <span id="countdown-number">3</span>
+  </div>
+
+  <!-- ===================== GAME OVER SCREEN ===================== -->
+  <section id="screen-gameover" class="screen">
+    <div class="card">
+      <p class="eyebrow" id="gameover-eyebrow">client review selesai!</p>
+      <h2 class="title-md">Skor Kamu</h2>
+      <div class="score-display" id="final-score">0</div>
+      <p class="score-caption" id="score-caption">lumayan lah buat pemanasan 😌</p>
+
+      <p class="best-score-line" id="best-score-line-2" hidden>
+        🏆 skor terbaik: <strong id="best-score-value-2">0</strong>
+        <span id="new-best-badge" hidden> — REKOR BARU! 🔥</span>
+      </p>
+
+      <button id="btn-retry" class="btn-primary">
+        <span>MAIN LAGI</span>
+        <span class="btn-arrow">↻</span>
+      </button>
+      <button id="btn-continue" class="btn-ghost">lanjut ke kado &gt;</button>
+    </div>
+  </section>
+
+  <!-- ===================== MESSAGE CARDS (WRAPPED STYLE) ===================== -->
+  <section id="screen-messages" class="screen">
+    <div class="wrapped-stage">
+      <div class="wrapped-progress" id="wrapped-progress"></div>
+
+      <div class="wrapped-card-wrap" id="wrapped-card-wrap">
+        <!-- cards injected by JS -->
+      </div>
+
+      <div class="wrapped-tap-zone wrapped-tap-left" id="tap-prev" aria-label="sebelumnya"></div>
+      <div class="wrapped-tap-zone wrapped-tap-right" id="tap-next" aria-label="selanjutnya"></div>
+    </div>
+  </section>
+
+  <!-- ===================== FINALE SCREEN ===================== -->
+  <section id="screen-finale" class="screen">
+    <canvas id="confetti-canvas"></canvas>
+    <div class="card finale-card">
+      <div class="cake-wrap">
+        <span class="cake-emoji">🎂</span>
+        <div class="balloons" aria-hidden="true">
+          <span>🎈</span><span>🎈</span><span>🎈</span>
+        </div>
+      </div>
+      <p class="eyebrow">akhirnya sampai juga...</p>
+      <h1 class="title-hero small">SELAMAT<br/>ULANG TAHUN<span class="dot">,</span></h1>
+      <h1 class="title-hero small accent">TAMA! 🎉</h1>
+
+      <p class="finale-message" id="finale-message">
+        makasih udah jadi Tama yang itu-itu aja tapi selalu ningkatin diri —
+        semoga tahun ini makin banyak project keren, makin sehat, dan makin sayang sama aku (wajib). 🥹💖
+      </p>
+
+      <p class="finale-signature">dengan sayang,<br/><strong id="finale-from">Shafilah</strong> 💌</p>
+
+      <div class="finale-actions">
+        <button id="btn-replay" class="btn-primary">
+          <span>MAIN LAGI</span>
+          <span class="btn-arrow">↻</span>
+        </button>
+        <button id="btn-share" class="btn-ghost">bagiin momen ini</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
