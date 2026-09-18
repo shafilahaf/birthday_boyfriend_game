@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<title>REVISI RUSH — Happy Birthday Tama! 🎉</title>
-<meta name="description" content="Kado ulang tahun buat Tama — sebuah game kecil, dibuat dengan sayang." />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>" />
+<title>TBH: Task Bar Hero — Happy Birthday Tama! 🎉</title>
+<meta name="description" content="Kado ulang tahun buat Tama — sebuah RPG kecil, dibuat dengan sayang." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,29 +27,29 @@
   <!-- ===================== START SCREEN ===================== -->
   <section id="screen-start" class="screen active">
     <div class="card intro-card">
-      <p class="eyebrow">🎁 sebuah kado kecil untuk</p>
+      <p class="eyebrow">⚔️ sebuah quest kecil untuk</p>
       <h1 class="title-hero">TAMA<span class="dot">.</span></h1>
       <p class="subtitle">buat kamu yang paling jago bikin orang lain "acc" cuma dari satu draft 🎨</p>
 
       <div class="game-name-tag">
-        <span class="tag-pill">🕹️ REVISI RUSH</span>
+        <span class="tag-pill">🎮 TBH: TASK BAR HERO</span>
       </div>
 
       <p class="intro-copy">
-        misi kamu: <strong>tangkep ide &amp; healing</strong>,
-        <strong>hindarin revisi &amp; deadline</strong>.
-        gampang kok, se-gampang kamu bikin logo dalam semalam. 😌
+        5 level, 5 boss, 1 hero. Kalahin semua musuh klasik seorang designer —
+        dari <strong>Kanvas Kosong</strong> sampai <strong>The Impossible Client</strong> —
+        buat buka hadiah di ending. 👑
       </p>
 
       <button id="btn-start" class="btn-primary">
-        <span>MULAI MAIN</span>
+        <span>MULAI QUEST</span>
         <span class="btn-arrow">→</span>
       </button>
 
       <button id="btn-howto" class="btn-ghost">cara main dulu deh</button>
 
-      <p class="best-score-line" id="best-score-line" hidden>
-        🏆 skor terbaik kamu: <strong id="best-score-value">0</strong>
+      <p class="best-score-line" id="continue-line" hidden>
+        📍 progress kamu: <strong id="continue-value">Level 1</strong>
       </p>
     </div>
   </section>
@@ -57,25 +57,25 @@
   <!-- ===================== HOW TO PLAY ===================== -->
   <section id="screen-howto" class="screen">
     <div class="card">
-      <p class="eyebrow">panduan client onboarding</p>
+      <p class="eyebrow">panduan hero baru</p>
       <h2 class="title-md">Cara Main</h2>
 
       <ul class="howto-list">
         <li>
+          <span class="howto-emoji">🗺️</span>
+          <span>Ada <strong>5 level</strong>, tiap level lawan 1 boss beda dengan tipe tantangan beda.</span>
+        </li>
+        <li>
           <span class="howto-emoji">👆</span>
-          <span><strong>Geser / drag</strong> layar (atau tombol <kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd> di desktop) buat gerakin karakter kamu.</span>
+          <span><strong>Level "tangkep" &amp; "hindar"</strong>: geser / drag layar (atau <kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd>) buat gerakin karakter.</span>
         </li>
         <li>
-          <span class="howto-emoji">🎨☕💡</span>
-          <span><strong>Tangkep</strong> ide, kopi, palet warna, dan love — itu semua bikin skor naik &amp; combo makin gila.</span>
+          <span class="howto-emoji">⚔️</span>
+          <span><strong>Level "serang"</strong>: tap layar (atau <kbd>Space</kbd>) pas indikator masuk zona hijau buat nge-hit boss.</span>
         </li>
         <li>
-          <span class="howto-emoji">📢⏰</span>
-          <span><strong>Hindarin</strong> "REVISI LAGI!", deadline mepet, sama request receh client — itu bikin nyawa kamu abis.</span>
-        </li>
-        <li>
-          <span class="howto-emoji">❤️</span>
-          <span>Nyawa cuma 3. Abis itu... client review kelar, dan ada sesuatu buat kamu di ending. 👀</span>
+          <span class="howto-emoji">❤️🏆</span>
+          <span>Tiap boss kelar dapet XP &amp; item. Kalau nyawa abis sebelum boss kalah, tinggal coba lagi — nggak balik ke level 1 kok.</span>
         </li>
       </ul>
 
@@ -87,21 +87,53 @@
     </div>
   </section>
 
-  <!-- ===================== GAME SCREEN ===================== -->
+  <!-- ===================== LEVEL MAP ===================== -->
+  <section id="screen-map" class="screen">
+    <div class="card map-card">
+      <p class="eyebrow">peta quest</p>
+      <h2 class="title-md">Pilih Level</h2>
+      <div class="level-path" id="level-path">
+        <!-- level nodes injected by JS -->
+      </div>
+      <button id="btn-map-back" class="btn-ghost">balik ke awal</button>
+    </div>
+  </section>
+
+  <!-- ===================== LEVEL INTRO ===================== -->
+  <section id="screen-level-intro" class="screen">
+    <div class="card">
+      <p class="eyebrow" id="li-level-label">LEVEL 1 / 5</p>
+      <div class="boss-portrait" id="li-boss-emoji">🖼️</div>
+      <h2 class="title-md" id="li-boss-name">Sang Kanvas Kosong</h2>
+      <p class="boss-flavor" id="li-flavor">Musuh pertama tiap designer.</p>
+      <div class="objective-box">
+        <span class="objective-label">🎯 misi</span>
+        <p id="li-objective">Tangkep 10 ide sebelum kehabisan nyawa.</p>
+      </div>
+      <button id="btn-level-start" class="btn-primary">
+        <span>MULAI TANTANGAN</span>
+        <span class="btn-arrow">⚔️</span>
+      </button>
+      <button id="btn-level-intro-back" class="btn-ghost">kembali ke peta</button>
+    </div>
+  </section>
+
+  <!-- ===================== GAME / CHALLENGE SCREEN ===================== -->
   <section id="screen-game" class="screen">
     <div class="hud">
-      <div class="hud-left">
-        <span class="hud-label">SKOR</span>
-        <span class="hud-value" id="hud-score">0</span>
-      </div>
-      <div class="hud-center" id="hud-combo" hidden>
-        <span id="hud-combo-value">x1</span> <span class="combo-word">combo!</span>
-      </div>
-      <div class="hud-right">
-        <button id="btn-mute" class="btn-mute-inline" aria-label="mute">🔊</button>
-        <div class="lives-pill" id="hud-lives">
-          <span class="life">❤️</span><span class="life">❤️</span><span class="life">❤️</span>
+      <div class="hud-row">
+        <div class="hud-boss">
+          <span class="hud-boss-emoji" id="hud-boss-emoji">🖼️</span>
+          <span class="hud-boss-name" id="hud-boss-name">Kanvas Kosong</span>
         </div>
+        <div class="hud-right">
+          <button id="btn-mute" class="btn-mute-inline" aria-label="mute">🔊</button>
+          <div class="lives-pill" id="hud-lives"></div>
+        </div>
+      </div>
+      <div class="boss-hp-track">
+        <div class="boss-hp-fill" id="boss-hp-fill"></div>
+        <span class="boss-hp-label" id="boss-hp-label">0/10</span>
       </div>
     </div>
 
@@ -115,24 +147,49 @@
     <span id="countdown-number">3</span>
   </div>
 
-  <!-- ===================== GAME OVER SCREEN ===================== -->
-  <section id="screen-gameover" class="screen">
+  <!-- ===================== LEVEL RESULT (VICTORY / DEFEAT) ===================== -->
+  <section id="screen-level-result" class="screen">
     <div class="card">
-      <p class="eyebrow" id="gameover-eyebrow">client review selesai!</p>
-      <h2 class="title-md">Skor Kamu</h2>
-      <div class="score-display" id="final-score">0</div>
-      <p class="score-caption" id="score-caption">lumayan lah buat pemanasan 😌</p>
+      <div class="boss-portrait" id="lr-emoji">🎉</div>
+      <p class="eyebrow" id="lr-eyebrow">VICTORY!</p>
+      <h2 class="title-md" id="lr-title">Boss Kalah!</h2>
+      <p class="lr-text" id="lr-text">Kamu dapet XP dan item baru.</p>
 
-      <p class="best-score-line" id="best-score-line-2" hidden>
-        🏆 skor terbaik: <strong id="best-score-value-2">0</strong>
-        <span id="new-best-badge" hidden> — REKOR BARU! 🔥</span>
-      </p>
+      <div class="reward-row" id="lr-reward" hidden>
+        <span class="reward-chip" id="lr-xp">+100 XP</span>
+        <span class="reward-chip" id="lr-item">🖌️ Kuas Ajaib</span>
+      </div>
 
-      <button id="btn-retry" class="btn-primary">
-        <span>MAIN LAGI</span>
+      <button id="btn-level-next" class="btn-primary" hidden>
+        <span>LANJUT</span>
+        <span class="btn-arrow">→</span>
+      </button>
+      <button id="btn-level-retry" class="btn-primary" hidden>
+        <span>COBA LAGI</span>
         <span class="btn-arrow">↻</span>
       </button>
-      <button id="btn-continue" class="btn-ghost">lanjut ke kado &gt;</button>
+      <button id="btn-level-result-map" class="btn-ghost">kembali ke peta</button>
+    </div>
+  </section>
+
+  <!-- ===================== QUEST COMPLETE / TREASURE ===================== -->
+  <section id="screen-quest-complete" class="screen">
+    <div class="card">
+      <div class="boss-portrait chest" id="qc-chest">📦</div>
+      <p class="eyebrow">quest complete</p>
+      <h2 class="title-md">Kamu Sekarang:</h2>
+      <h1 class="title-hero small accent">LEGENDARY<br/>DESIGNER 🏆</h1>
+
+      <div class="inventory-box">
+        <p class="objective-label">🎒 total XP dikumpulin</p>
+        <div class="score-display small" id="qc-total-xp">0</div>
+        <div class="inventory-list" id="qc-inventory"></div>
+      </div>
+
+      <button id="btn-quest-continue" class="btn-primary">
+        <span>BUKA HADIAH TERAKHIR</span>
+        <span class="btn-arrow">🎁</span>
+      </button>
     </div>
   </section>
 
@@ -173,7 +230,7 @@
 
       <div class="finale-actions">
         <button id="btn-replay" class="btn-primary">
-          <span>MAIN LAGI</span>
+          <span>MAIN LAGI DARI AWAL</span>
           <span class="btn-arrow">↻</span>
         </button>
         <button id="btn-share" class="btn-ghost">bagiin momen ini</button>

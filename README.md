@@ -1,8 +1,8 @@
-# REVISI RUSH 🎨🎉
+# TBH: TASK BAR HERO ⚔️🎉
 
-Kado ulang tahun buat **Tama** — sebuah mini-game kecil yang bisa dia mainin langsung dari browser (HP atau laptop), nggak perlu install apa-apa.
+Kado ulang tahun buat **Tama** — sebuah RPG kecil yang bisa dia mainin langsung dari browser (HP atau laptop), nggak perlu install apa-apa.
 
-Ceritanya: Tama (graphic designer) harus nangkep ide, kopi, dan love — sambil ngehindarin "REVISI LAGI!", deadline, dan drama client. Abis game over, ada pesan-pesan ulang tahun (gaya story/wrapped) dan penutup manis dari kamu.
+Ceritanya: Tama jadi hero yang harus ngalahin **5 boss level** — musuh-musuh klasik seorang graphic designer, dari **Sang Kanvas Kosong** sampai **The Impossible Client**. Tiap boss punya tipe tantangan beda (tangkep, hindar, atau timing-attack), ngasih XP + item pas menang. Abis boss ke-5 kalah, ada peti harta, lalu pesan-pesan ulang tahun (gaya story/wrapped) dan penutup manis dari kamu.
 
 Dibuat pakai HTML/CSS/JS biasa (tanpa framework, tanpa build step), jadi gampang banget di-deploy ke **Vercel**.
 
@@ -32,9 +32,9 @@ Itu aja. Nggak ada `npm install`, nggak ada database, nggak ada API key.
 
 ---
 
-## ✏️ Cara edit pesan / nama / konten
+## ✏️ Cara edit pesan / nama / level / konten
 
-Semua teks yang perlu di-personalisasi ada di **satu tempat**: buka file `game.js`, paling atas ada blok `CONFIG = { ... }`.
+Semua yang perlu di-personalisasi ada di **satu tempat**: buka file `game.js`, paling atas ada blok `CONFIG = { ... }`.
 
 Yang bisa kamu ubah:
 
@@ -43,14 +43,34 @@ Yang bisa kamu ubah:
 | `playerName` | Nama yang muncul di judul & pesan (default: `"Tama"`) |
 | `fromName` | Nama kamu di penutup (default: `"Shafilah"`) |
 | `introSubtitle` | Kalimat di layar pembuka |
-| `messages` | Array kartu-kartu pesan (gaya "wrapped") — tambah/hapus/edit sesukanya, tiap kartu punya `emoji`, `title`, `text` |
+| `levels` | Array 5 boss level — tiap level punya `name`, `emoji`, `flavor`, `objective`, `type` (`catch`/`dodge`/`qte`), parameter kesulitan, dan `reward` (`xp` + `item`) |
+| `messages` | Array kartu-kartu pesan (gaya "wrapped") setelah quest kelar — tambah/hapus/edit sesukanya |
 | `finaleMessage` | Pesan panjang di layar terakhir sebelum "Main Lagi" |
-| `goodItems` / `badItems` | Emoji yang jatuh di game (item bagus untuk ditangkap vs item buruk untuk dihindari) |
+| `goodItemsDefault` / `badItemsDefault` | Emoji default yang jatuh di level bertipe "catch" (bisa di-override per level) |
 | `playerEmoji` | Emoji karakter yang dikontrol pemain |
 
 Setelah edit, tinggal simpan file-nya. Kalau sudah di-deploy ke Vercel dan repo-nya kamu push ulang ke GitHub, Vercel bakal otomatis redeploy dengan perubahan terbaru.
 
-**Contoh edit pesan:**
+**Contoh nambah/edit level:**
+
+```js
+levels: [
+  {
+    name: "Sang Kanvas Kosong",
+    emoji: "🖼️",
+    flavor: "Kalimat flavor boss...",
+    objective: "Deskripsi misi yang muncul di layar intro level.",
+    type: "catch",       // "catch" | "dodge" | "qte"
+    targetHits: 10,       // dipakai type catch & qte
+    maxMisses: 3,
+    speedMul: 1,
+    reward: { xp: 100, item: "🖌️ Kuas Ajaib" },
+  },
+  // level lain...
+],
+```
+
+**Contoh edit pesan penutup:**
 
 ```js
 messages: [
@@ -67,11 +87,13 @@ messages: [
 
 ## 🕹️ Cara main (buat kamu tes duluan)
 
-- **Drag / geser** layar (atau tombol panah kiri-kanan / A-D di keyboard) buat gerakin karakter.
-- Tangkep item bagus (🎨☕💡⭐✅❤️) buat nambah skor & combo.
-- Hindarin item buruk (📢⏰🙄🐌) — kena 3x, game over.
-- Abis game over → lanjut ke kartu-kartu pesan ulang tahun → penutup dengan confetti.
-- Skor terbaik kesimpen otomatis di browser (localStorage), jadi Tama bisa coba ngalahin skor sendiri.
+- Ada **5 level**, tiap level lawan 1 boss dengan tipe tantangan beda:
+  - **Tangkep** (catch) — drag/geser (atau `←`/`→`, `A`/`D`) buat nangkep item bagus, hindarin item buruk.
+  - **Hindar** (dodge) — bertahan sampai waktu habis sambil ngehindarin serangan, sesekali ada item penyembuh.
+  - **Serang** (qte) — tap layar / tekan `Space` pas indikator masuk zona hijau.
+- Tiap boss kelar dapet XP & item. Kalau nyawa abis sebelum boss kalah, tinggal "Coba Lagi" — nggak balik ke level 1.
+- Progress kesimpen otomatis di browser (localStorage), jadi Tama bisa lanjut kapan aja tanpa mulai dari nol.
+- Abis boss ke-5 kalah → peti harta (total XP + semua item) → kartu-kartu pesan ulang tahun → penutup dengan confetti.
 
 ## 🧪 Cara coba di komputer sendiri sebelum deploy
 

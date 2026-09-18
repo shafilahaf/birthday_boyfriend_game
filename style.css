@@ -22,6 +22,11 @@
 
 * { box-sizing: border-box; }
 
+/* The `hidden` attribute must always win over a class's own `display`
+   rule (e.g. .btn-primary { display: flex }), otherwise a "hidden"
+   button/row stays visible and clickable. */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;
@@ -258,13 +263,13 @@ button {
 
 .btn-mute-inline {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 2.5px solid var(--line);
   background: rgba(255,248,251,0.92);
   box-shadow: 3px 3px 0 var(--line);
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
 }
 .btn-mute-inline:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--line); }
@@ -323,64 +328,80 @@ kbd {
 .hud {
   position: relative;
   z-index: 4;
+  padding: max(14px, env(safe-area-inset-top)) 16px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hud-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: max(14px, env(safe-area-inset-top)) 16px 10px;
-  gap: 10px;
+  gap: 8px;
 }
 
-.hud-left, .lives-pill {
+.hud-boss, .lives-pill {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: rgba(255,248,251,0.92);
   border: 2.5px solid var(--line);
   border-radius: 14px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   box-shadow: 3px 3px 0 var(--line);
+}
+
+.hud-boss { min-width: 0; flex-shrink: 1; }
+
+.hud-boss-emoji { font-size: 16px; flex-shrink: 0; }
+.hud-boss-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--ink);
+  max-width: 26vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hud-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
-.hud-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #8a7a95;
-}
-.hud-value {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--ink);
-  min-width: 24px;
-  text-align: right;
-}
-
-.hud-center {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--yellow);
-  text-shadow: 2px 2px 0 var(--line);
-  animation: combo-pop 0.3s ease;
-  white-space: nowrap;
-}
-.combo-word { font-size: 11px; opacity: 0.9; }
-
-@keyframes combo-pop {
-  0% { transform: scale(0.6) rotate(-8deg); opacity: 0; }
-  60% { transform: scale(1.15) rotate(3deg); }
-  100% { transform: scale(1) rotate(0); opacity: 1; }
-}
-
-.hud-right .life { font-size: 16px; filter: drop-shadow(1px 1px 0 var(--line)); }
+.hud-right .life { font-size: 15px; filter: drop-shadow(1px 1px 0 var(--line)); }
 .hud-right .life.lost { opacity: 0.25; filter: grayscale(1); }
+
+.boss-hp-track {
+  position: relative;
+  height: 20px;
+  background: rgba(26,16,37,0.35);
+  border: 2.5px solid var(--line);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.boss-hp-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--pink-deep), var(--pink));
+  border-radius: 100px;
+  transition: width 0.25s ease;
+}
+.boss-hp-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--paper);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+}
 
 #game-canvas {
   flex: 1;
@@ -424,9 +445,6 @@ kbd {
   align-items: center;
   justify-content: center;
   background: rgba(26,16,37,0.55);
-}
-#countdown-overlay[hidden] {
-  display: none;
 }
 #countdown-number {
   font-family: var(--font-display);
@@ -619,6 +637,189 @@ kbd {
 .finale-signature strong { color: var(--pink-deep); font-family: var(--font-display); font-size: 17px; }
 
 .finale-actions { display: flex; flex-direction: column; }
+
+/* ---------- level map ---------- */
+
+.map-card { max-width: 380px; }
+
+.level-path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0 20px;
+}
+
+.level-node {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 280px;
+  background: var(--paper-dim);
+  border: 2.5px solid var(--line);
+  border-radius: 18px;
+  padding: 10px 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: transform 0.12s ease;
+}
+.level-node:not(.locked):active { transform: scale(0.97); }
+
+.level-node + .level-node { margin-top: 6px; }
+
+.level-node .ln-emoji {
+  font-size: 30px;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 50%;
+}
+.level-node .ln-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.level-node .ln-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--purple);
+}
+.level-node .ln-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.level-node .ln-status { font-size: 18px; flex-shrink: 0; }
+
+.level-node.current {
+  background: var(--yellow);
+  box-shadow: 3px 3px 0 var(--line);
+  animation: node-pulse 1.6s ease-in-out infinite;
+}
+@keyframes node-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+.level-node.done .ln-emoji { background: var(--green); }
+.level-node.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+}
+
+/* ---------- level intro / boss card ---------- */
+
+.boss-portrait {
+  font-size: 64px;
+  margin-bottom: 6px;
+  filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.12));
+  animation: boss-idle 2.4s ease-in-out infinite;
+}
+@keyframes boss-idle {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-6px) rotate(2deg); }
+}
+
+.boss-flavor {
+  font-size: 14px;
+  font-style: italic;
+  color: #7a6a85;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+.objective-box {
+  background: var(--paper-dim);
+  border: 2.5px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.objective-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 4px;
+}
+.objective-box p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* ---------- level result ---------- */
+
+.lr-text {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #4a3a55;
+  margin: 0 0 18px;
+}
+
+.reward-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.reward-chip {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  background: var(--yellow);
+  border: 2.5px solid var(--line);
+  border-radius: 100px;
+  padding: 7px 14px;
+  box-shadow: 3px 3px 0 var(--line);
+}
+
+/* ---------- quest complete / treasure ---------- */
+
+.boss-portrait.chest {
+  font-size: 72px;
+  animation: chest-bounce 1s ease-in-out infinite;
+}
+@keyframes chest-bounce {
+  0%, 100% { transform: scale(1) rotate(0); }
+  50% { transform: scale(1.08) rotate(-3deg); }
+}
+
+.inventory-box {
+  background: var(--paper-dim);
+  border: 2.5px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  margin: 6px 0 22px;
+}
+.score-display.small { font-size: 40px; margin: 2px 0 12px; }
+.inventory-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.inventory-list .reward-chip { background: var(--paper); }
 
 /* ---------- responsive tweaks ---------- */
 
