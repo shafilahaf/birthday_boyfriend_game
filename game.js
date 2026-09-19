@@ -1,5 +1,5 @@
 /* =========================================================
-   TBH: TASK BAR HERO — a tiny RPG birthday quest for Tama.
+   TBH: THE BIRTHDAY HERO — a tiny RPG birthday quest for Tama.
 
    ============ WANNA EDIT THE WORDS? START HERE ============
    Everything you'd want to personalize lives in CONFIG below.
@@ -12,22 +12,22 @@ const CONFIG = {
   fromName: "Shafilah",
 
   // Shown on the very first screen.
-  introSubtitle: "buat kamu yang paling jago bikin orang lain “acc” cuma dari satu draft 🎨",
+  introSubtitle: "buat kamu yang selalu bikin hari-hariku berasa lebih baik, apapun yang lagi terjadi 💛",
 
-  playerEmoji: "🧑‍🎨",
+  playerEmoji: "🦸",
 
   // Default falling items for "catch" levels. A level can override
   // with its own goodItems / badItems array of { emoji }.
   goodItemsDefault: [
-    { emoji: "🎨" }, { emoji: "💡" }, { emoji: "☕" },
+    { emoji: "✨" }, { emoji: "💡" }, { emoji: "☕" },
     { emoji: "⭐" }, { emoji: "✅" }, { emoji: "❤️" },
   ],
   badItemsDefault: [
-    { emoji: "📢" }, { emoji: "⏰" }, { emoji: "🙄" }, { emoji: "🐌" },
+    { emoji: "😩" }, { emoji: "😵‍💫" }, { emoji: "🙄" }, { emoji: "🐌" },
   ],
 
-  goodFloaterWords: ["GASKEUN!", "MANTAP!", "SAT SET!", "ACC!", "BASED.", "SIKAT!", "CRITICAL HIT!"],
-  badFloaterWords: ["YAH ANJAY 😩", "REVISI MULU!", "ELAH...", "KENA DEH", "MELESET!"],
+  goodFloaterWords: ["GASKEUN!", "MANTAP!", "SAT SET!", "YESS!", "BASED.", "SIKAT!", "CRITICAL HIT!"],
+  badFloaterWords: ["YAH ANJAY 😩", "ELAH...", "KENA DEH", "MELESET!"],
 
   // The 5 boss levels of the quest. Add/remove/edit freely — the
   // engine below adapts automatically to however many you list.
@@ -37,68 +37,68 @@ const CONFIG = {
   // type: "qte"    → tap / press Space when the marker is in the green zone, reach targetHits.
   levels: [
     {
-      name: "Sang Kanvas Kosong",
-      emoji: "🖼️",
-      flavor: "Musuh pertama tiap designer: rasa parno liat file baru yang masih putih polos.",
-      objective: "Tangkep 10 percikan ide sebelum kehabisan 3 nyawa.",
-      defeatLine: "Kanvas kosongnya menang dulu. Sat set lagi, jangan overthinking!",
+      name: "Sang Sloth Mager",
+      emoji: "🦥",
+      flavor: "Musuh sejuta umat pas weekend: rasa males gerak dari kasur yang susah banget dilawan.",
+      objective: "Tangkep 10 percikan semangat sebelum kehabisan 3 nyawa.",
+      defeatLine: "Mager-nya menang dulu. Rebahan bentar, terus gaskeun lagi!",
       type: "catch",
       targetHits: 10,
       maxMisses: 3,
       speedMul: 1,
-      reward: { xp: 100, item: "🖌️ Kuas Ajaib" },
+      reward: { xp: 100, item: "☀️ Semangat Pagi" },
     },
     {
-      name: "Revisimon, Raja Revisi",
-      emoji: "👹",
-      flavor: "Makin jago lo, makin sering dia muncul sambil bilang “direvisi dikit ya, gampang kok”.",
-      objective: "Bertahan 18 detik dari serangan revisi. Tangkep 🛡️ buat mulihin nyawa.",
-      defeatLine: "Revisinya kebanyakan. Tarik napas, terus gaskeun lagi.",
+      name: "King Baper",
+      emoji: "🎭",
+      flavor: "Raja drama yang mood-nya bisa berubah 7x cuma gara-gara chat kelamaan di-read.",
+      objective: "Bertahan 18 detik dari drama-nya. Tangkep 💗 buat mulihin nyawa.",
+      defeatLine: "Drama-nya kebanyakan. Tarik napas, terus gaskeun lagi.",
       type: "dodge",
       duration: 18,
       maxMisses: 4,
       speedMul: 1.15,
-      goodItems: [{ emoji: "🛡️" }],
-      badItems: [{ emoji: "📢" }, { emoji: "😤" }, { emoji: "💢" }, { emoji: "🗯️" }],
-      reward: { xp: 150, item: "🛡️ Perisai Anti-Baper" },
+      goodItems: [{ emoji: "💗" }],
+      badItems: [{ emoji: "😭" }, { emoji: "😤" }, { emoji: "🌧️" }, { emoji: "💢" }],
+      reward: { xp: 150, item: "🧊 Es Penenang Hati" },
     },
     {
-      name: "Deadline Dragon",
+      name: "Naga FOMO",
       emoji: "🐉",
-      flavor: "Muncul tiap H-1, dan makin gede tiap lo bilang “bentar lagi kelar kok”.",
+      flavor: "Doyan banget bisikin “scroll lagi deh” padahal jam udah nunjukin jam 2 pagi.",
       objective: "Timing serangan pas di zona hijau. Kena 8x sebelum meleset 4x.",
-      defeatLine: "Dragon-nya masih berdiri. Fokusin timing, jangan buru-buru!",
+      defeatLine: "Naga-nya masih berdiri. Fokusin timing, jangan buru-buru!",
       type: "qte",
       targetHits: 8,
       maxMisses: 4,
       speedMul: 1.2,
       qteZoneWidth: 0.22,
-      reward: { xp: 200, item: "⌛ Jam Pasir Ajaib" },
+      reward: { xp: 200, item: "🌙 Jam Tidur Nyenyak" },
     },
     {
-      name: "Font Goblin",
-      emoji: "👺",
-      flavor: "Suka nyolong waktu yang harusnya buat kerja, abis itu dipake milih font doang.",
-      objective: "Tangkep 14 ide — dia jatuhnya lebih cepet dari biasa.",
-      defeatLine: "Goblin-nya licin banget. Fokus di gerakan kamu, jangan panik.",
+      name: "Burung Overthink",
+      emoji: "🦉",
+      flavor: "Muncul tiap malem, bikin mikirin hal receh yang harusnya udah lewat dari kemarin.",
+      objective: "Tangkep 14 ketenangan — dia jatuhnya lebih cepet dari biasa.",
+      defeatLine: "Overthinking-nya menang dulu. Fokus di gerakan kamu, jangan panik.",
       type: "catch",
       targetHits: 14,
       maxMisses: 3,
       speedMul: 1.45,
-      reward: { xp: 250, item: "🔤 Font Legendaris" },
+      reward: { xp: 250, item: "🕊️ Bulu Ketenangan" },
     },
     {
-      name: "The Impossible Client",
-      emoji: "🤡",
-      flavor: "“Simple tapi mewah, modern tapi klasik, tolong logonya keliatan pas dijadiin ring HP.”",
+      name: "Sang Penjaga Hati",
+      emoji: "🦁",
+      flavor: "Final boss. Katanya dia jagain sesuatu yang paling berharga, disembunyiin khusus buat hari ini.",
       objective: "Final boss. Kena zona hijau 10x sebelum meleset 3x — zonanya lebih sempit & cepet.",
-      defeatLine: "Client-nya belum puas. Satu lagi, kamu pasti bisa!",
+      defeatLine: "Penjaganya belum nyerah. Satu lagi, kamu pasti bisa!",
       type: "qte",
       targetHits: 10,
       maxMisses: 3,
       speedMul: 1.5,
       qteZoneWidth: 0.16,
-      reward: { xp: 500, item: "👑 Mahkota Designer Sejati" },
+      reward: { xp: 500, item: "💝 Kunci Menuju Kejutan" },
     },
   ],
 
@@ -110,14 +110,14 @@ const CONFIG = {
       text: "Sebelum lanjut scroll — ini bukan iklan, ini kado. Selamat ulang tahun, sayang. 🥹",
     },
     {
-      emoji: "🎨",
+      emoji: "💛",
       title: "Real talk",
-      text: "Kamu itu designer yang revisinya dikit tapi hasilnya selalu di atas ekspektasi. Klien beruntung. Aku lebih beruntung.",
+      text: "Kamu salah satu alasan aku percaya orang yang tepat itu beneran ada. Makasih udah selalu ada, apa adanya.",
     },
     {
       emoji: "☕",
       title: "PSA",
-      text: "Tolong minum air putih, tidur yang cukup, dan berhenti begadang cuma buat “ngulik dikit lagi”. Sekali ini aja dengerin aku. 😅",
+      text: "Tolong minum air putih, tidur yang cukup, dan berhenti begadang cuma buat scroll hp “bentar lagi”. Sekali ini aja dengerin aku. 😅",
     },
     {
       emoji: "🫶",
@@ -127,13 +127,13 @@ const CONFIG = {
     {
       emoji: "💞",
       title: "Last one, janji",
-      text: "Semoga umur baru ini bawa lebih banyak project impian, healing yang worth it, dan kita yang makin solid. Happy birthday, Tama!",
+      text: "Semoga umur baru ini bawa lebih banyak momen bahagia, hal-hal baru yang seru, dan kita yang makin solid. Happy birthday, Tama!",
     },
   ],
 
   // Big closing message on the very last screen.
   finaleMessage:
-    "makasih udah jadi Tama yang itu-itu aja tapi selalu ningkatin diri — semoga tahun ini makin banyak project keren, makin sehat, dan makin sayang sama aku (wajib). 🥹💖",
+    "makasih udah jadi Tama yang itu-itu aja tapi selalu ningkatin diri — semoga tahun ini makin banyak momen bahagia, makin sehat, dan makin sayang sama aku (wajib). 🥹💖",
 };
 
 /* ========================================================= */
@@ -1065,7 +1065,7 @@ const CONFIG = {
 
   el("btn-share").addEventListener("click", async () => {
     const text =
-      "Aku baru menang quest TBH: Task Bar Hero, kado ulang tahun dari " + CONFIG.fromName +
+      "Aku baru menang quest TBH: The Birthday Hero, kado ulang tahun dari " + CONFIG.fromName +
       "! Total XP: " + progress.totalXP + ". Happy birthday " + CONFIG.playerName + "! 🎉";
     if (navigator.share) {
       try { await navigator.share({ text }); return; } catch (e) { /* user cancelled, fall through */ }
