@@ -223,6 +223,8 @@ const CONFIG = {
 
   /* ---------------- mute button ---------------- */
 
+  const bdayAudio = el("bday-audio");
+
   const btnMute = el("btn-mute");
   function refreshMuteBtn() { btnMute.textContent = isMuted() ? "🔇" : "🔊"; }
   btnMute.addEventListener("click", () => { setMuted(!isMuted()); refreshMuteBtn(); });
@@ -1027,6 +1029,10 @@ const CONFIG = {
   function showFinale() {
     showScreen("finale");
     startConfetti();
+    if (!isMuted()) {
+      bdayAudio.currentTime = 0;
+      bdayAudio.play().catch(() => { /* autoplay blocked, ignore */ });
+    }
   }
 
   /* ---------------- static text injection from CONFIG ---------------- */
@@ -1057,6 +1063,8 @@ const CONFIG = {
 
   el("btn-replay").addEventListener("click", () => {
     stopConfetti();
+    bdayAudio.pause();
+    bdayAudio.currentTime = 0;
     resetProgress();
     refreshContinueLine();
     ensureAudio();
