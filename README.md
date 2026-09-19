@@ -1,8 +1,8 @@
-# TBH: TASK BAR HERO ⚔️🎉
+# TBH: THE BIRTHDAY HERO ⚔️🎉
 
 Kado ulang tahun buat **Tama** — sebuah RPG kecil yang bisa dia mainin langsung dari browser (HP atau laptop), nggak perlu install apa-apa.
 
-Ceritanya: Tama jadi hero yang harus ngalahin **5 boss level** — musuh-musuh klasik seorang graphic designer, dari **Sang Kanvas Kosong** sampai **The Impossible Client**. Tiap boss punya tipe tantangan beda (tangkep, hindar, atau timing-attack), ngasih XP + item pas menang. Abis boss ke-5 kalah, ada peti harta, lalu pesan-pesan ulang tahun (gaya story/wrapped) dan penutup manis dari kamu.
+Ceritanya: Tama jadi hero yang harus ngalahin **5 boss level** — musuh-musuh receh yang relatable buat siapa aja (mager, moody, FOMO, overthinking), dari **Sang Sloth Mager** sampai **Sang Penjaga Hati**. Tiap boss punya tipe tantangan beda (tangkep, hindar, atau timing-attack), ngasih XP + item pas menang. Abis boss ke-5 kalah, ada peti harta, lalu pesan-pesan ulang tahun (gaya story/wrapped) dan penutup manis dari kamu.
 
 Dibuat pakai HTML/CSS/JS biasa (tanpa framework, tanpa build step), jadi gampang banget di-deploy ke **Vercel**.
 
@@ -56,15 +56,15 @@ Setelah edit, tinggal simpan file-nya. Kalau sudah di-deploy ke Vercel dan repo-
 ```js
 levels: [
   {
-    name: "Sang Kanvas Kosong",
-    emoji: "🖼️",
+    name: "Sang Sloth Mager",
+    emoji: "🦥",
     flavor: "Kalimat flavor boss...",
     objective: "Deskripsi misi yang muncul di layar intro level.",
     type: "catch",       // "catch" | "dodge" | "qte"
     targetHits: 10,       // dipakai type catch & qte
     maxMisses: 3,
     speedMul: 1,
-    reward: { xp: 100, item: "🖌️ Kuas Ajaib" },
+    reward: { xp: 100, item: "☀️ Semangat Pagi" },
   },
   // level lain...
 ],
