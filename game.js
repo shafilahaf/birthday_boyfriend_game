@@ -106,34 +106,34 @@ const CONFIG = {
   messages: [
     {
       emoji: "🎉",
-      title: "Woy, Tama!",
-      text: "Sebelum lanjut scroll — ini bukan iklan, ini kado. Selamat ulang tahun, sayang. 🥹",
+      title: "AMAYOYYY!",
+      text: "Sebelum lanjut scroll, berhenti bentar. Ini bukan iklan, tapi kado kecil dari aku buat amu tonyoy. 🥹 Happy birthday, cintakuu. 🥹💗 Semoga di umur yang baru ini kamu selalu dikelilingi hal-hal baik, banyak bahagia, dan selalu merasa disayang. I’m so lucky to have you. Love you always, Tama. 🫶🏻",
     },
     {
       emoji: "💛",
       title: "Real talk",
-      text: "Kamu salah satu alasan aku percaya orang yang tepat itu beneran ada. Makasih udah selalu ada, apa adanya.",
+      text: "Aku bersyukur banget bisa kenal dan punya kamu. Kamu salah satu orang yang bikin aku percaya kalau ternyata punya seseorang yang bisa jadi rumah itu beneran ada. Makasih ya, udah selalu ada dan selalu jadi diri kamu sendiri.",
     },
     {
       emoji: "☕",
-      title: "PSA",
-      text: "Tolong minum air putih, tidur yang cukup, dan berhenti begadang cuma buat scroll hp “bentar lagi”. Sekali ini aja dengerin aku. 😅",
+      title: "Sedikit pesan dari aku",
+      text: "Di umur yang baru ini, tolong lebih sayang sama diri sendiri ya. Jangan kebanyakan begadang, jangan lupa makan, minum air putih jangan ngopi muluu, dan jangan bilang bikin uwing kesel. 😭 Sekali-sekali dengerin aku, boleh lah ya kan uwing...",
     },
     {
       emoji: "🫶",
-      title: "Btw",
-      text: "Makasih udah selalu jadi tempat healing paling nyaman, paling sabar, dan paling lucu (kadang nyebelin, tapi lucu). I love you banget.",
+      title: "Btw...",
+      text: "Makasih udah jadi tempat paling nyaman buat aku cerita, ngeluh, ketawa, bahkan jadi tempat aku pulang setelah hari yang capek. Kamu sabar banget ngadepin aku dan uwing, walaupun kadang aku juga bikin kamu pusing. 😭 Aku sayang banget sama kamu, amayoy. More than I probably say enough.",
     },
     {
       emoji: "💞",
       title: "Last one, janji",
-      text: "Semoga umur baru ini bawa lebih banyak momen bahagia, hal-hal baru yang seru, dan kita yang makin solid. Happy birthday, Tama!",
+      text: "Semoga di umur yang baru ini kamu ketemu lebih banyak hal baik, lebih banyak alasan buat bahagia, dan semua yang kamu usahain pelan-pelan bisa tercapai. Semoga kita juga terus tumbuh bareng, saling nemenin, dan tetap jadi kita yang sekarang—cuma versi yang makin baik. Happy birthday, Tama. ❤️",
     },
   ],
 
   // Big closing message on the very last screen.
   finaleMessage:
-    "makasih udah jadi Tama yang itu-itu aja tapi selalu ningkatin diri — semoga tahun ini makin banyak momen bahagia, makin sehat, dan makin sayang sama aku (wajib). 🥹💖",
+    "Makasih ya, udah jadi amayoy yang aku kenal sampai sekarang. Tetap jadi kamu yang apa adanya, tapi jangan berhenti tumbuh jadi versi diri kamu yang lebih baik. Semoga tahun ini kamu makin bahagia, makin sehat, makin banyak hal baik yang datang, dan semoga aku masih boleh terus nemenin kamu di banyak ulang tahun berikutnya. Oh iya, satu lagi... target nikahin acuuu. Ini wajib. 🥹💖",
 };
 
 /* ========================================================= */
@@ -222,6 +222,8 @@ const CONFIG = {
   function sfxVictory() { beep(660, 0.35, "triangle", 0.14); }
 
   /* ---------------- mute button ---------------- */
+
+  const bdayAudio = el("bday-audio");
 
   const btnMute = el("btn-mute");
   function refreshMuteBtn() { btnMute.textContent = isMuted() ? "🔇" : "🔊"; }
@@ -1027,6 +1029,10 @@ const CONFIG = {
   function showFinale() {
     showScreen("finale");
     startConfetti();
+    if (!isMuted()) {
+      bdayAudio.currentTime = 0;
+      bdayAudio.play().catch(() => { /* autoplay blocked, ignore */ });
+    }
   }
 
   /* ---------------- static text injection from CONFIG ---------------- */
@@ -1057,6 +1063,8 @@ const CONFIG = {
 
   el("btn-replay").addEventListener("click", () => {
     stopConfetti();
+    bdayAudio.pause();
+    bdayAudio.currentTime = 0;
     resetProgress();
     refreshContinueLine();
     ensureAudio();
